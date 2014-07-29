@@ -69,6 +69,10 @@ clean:
 	@echo clean ...
 	@rm -f $(OFILES) $(TARGET).sfc  *.pic *.pal *.map *.bnk *.brr soundbank.asm soundbank.h
 
+sfc	:	bitmaps $(OUTPUT).sfc
+	$(SNTOOLS) -hi! $(GTITLE) $(TARGET).sfc
+	@rm -f $(OFILES) *.pic *.pal *.map *.bnk *.brr soundbank.asm soundbank.h
+
 #---------------------------------------------------------------------------------
 soundbank.asm : $(AUDIOFILES)
 	@echo Compiling Soundbank ...
