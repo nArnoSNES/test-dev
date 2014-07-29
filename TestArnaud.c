@@ -26,6 +26,11 @@ extern char snesfont;
 extern char soundbrr,soundbrrend;
 brrsamples hihisound;
 
+void consoleSetShadowCol(u8 paletteNumber, u16 colorShad) {
+	// For 3 color Font
+	REG_CGADD = 0x02+(paletteNumber<<4); *CGRAM_PALETTE = colorShad & 0xFF; *CGRAM_PALETTE = colorShad>>8;
+}
+
 //---------------------------------------------------------------------------------
 int main(void) {
 	short scrX=0, scrY=0;
@@ -54,6 +59,7 @@ int main(void) {
 	// Initialize text console with our font
 	consoleInitText(0, 1, &snesfont);
 	consoleSetTextCol(RGB15(0,0,0),RGB15(31,31,31));
+	consoleSetShadowCol(1,RGB15(15,15,15));
 
 	// Load effect
 	spcSetSoundEntry(15, 8, 4, &soundbrrend-&soundbrr, &soundbrr, &hihisound);
@@ -100,6 +106,7 @@ int main(void) {
 	
 	// Write new text
 	consoleSetTextCol(RGB15(15,5,5),RGB15(0,0,0));
+	consoleSetShadowCol(1,RGB15(31,20,20));
 	consoleDrawText(6,10,"{_________________}");
 	consoleDrawText(6,11,"|                 |");
 	consoleDrawText(6,12,"|      Menu 1     |");
@@ -107,7 +114,7 @@ int main(void) {
 	consoleDrawText(6,14,"|      Menu 2     |");
 	consoleDrawText(6,15,"|                 |");
 	consoleDrawText(6,16,"^_________________~");
-  //                     "7890123456789012678"  
+	//                   "6789012345678901267"  
 	
 	// Init sprite
 	oamInitGfxSet(&gfxpsrite, (&gfxpsrite_end-&gfxpsrite), &palsprite, (&palsprite_end-&palsprite), 0, 0x6000, OBJ_SIZE8);
@@ -164,6 +171,7 @@ int main(void) {
 	bgSetDisable(1);
 	setPaletteColor(0x00,0);
 	consoleSetTextCol(RGB15(31,31,31),RGB15(0,0,0));
+	consoleSetShadowCol(1,RGB15(15,15,15));
 	consoleDrawText(6,10,"                   ");
 	consoleDrawText(6,11,"                   ");
 	consoleDrawText(6,12,"                   ");
